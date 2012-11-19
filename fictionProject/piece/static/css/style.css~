@@ -1,0 +1,43 @@
+body {
+    background-color: beige;
+}
+
+#top_links {
+    background-color: #989898;
+    top:0em;
+    position:fixed;
+    width:100%;
+    left:0em;
+    right:0em;
+}
+
+#top_links ul {
+
+}
+
+#top_links ul li {
+    display:inline;
+    position:relative;
+    padding-right:2em;
+}
+
+#top_links a {
+    text-decoration:none;
+}
+
+#top_links a:hover {
+    color:darkred;
+}
+
+#content {
+    position:relative;
+    top:4em;
+    padding-left:2em;
+    padding-right:14em;
+    bottom:0em;
+}
+
+#upcoming {
+    font-size:xx-small;
+    color:gray;
+}

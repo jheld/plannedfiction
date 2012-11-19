@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block js %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+{% endblock %}
+{% block content %}
+<h3>
+  Piece
+</h3>
+<input id="piece_title_input_id" value="{{ piece.title }}"/><button id="update_piece_title_button_id">Update</button>
+<h4>
+  Characters
+</h4>
+<ul id="current_characters">
+  {% for character in characters.all %}
+  <li>
+    {{ character.first_name }}
+    {% if character.middle_name %}
+    {{ character.middle_name }}
+    {% endif %}
+    {{ character.last_name }}<ul>
+      {% for event in events.all %}
+      {% for c in event.characters.all %}
+      {% ifequal c.pk character.pk %}
+      <li>
+	<a href="{% url 'event' piece.pk event.pk %}">
+	  {{ event.name }}
+	</a>
+      </li>
+      {% endifequal %}
+      {% endfor %}
+      {% endfor %}
+    </ul
+  </li>
+  {% endfor %}
+</ul>
+<form method="POST" action="." id="character_form">
+<h3>Character Form</h3>
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit" value="Submit"/>
+</form>
+<form method="POST" action="." id="event_form">
+  <hr>
+  <h3>Event Form</h3>
+  {% csrf_token %}
+  <table>
+    {{ event_form.as_table }}
+  </table>
+  <input type="submit" value="Submit"/>
+</form>
+{% endblock %}

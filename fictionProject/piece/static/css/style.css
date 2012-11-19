@@ -1,0 +1,57 @@
+body {
+    background-color: beige;
+}
+
+#top_links {
+    background-color: #989898;
+    top:0em;
+    position:fixed;
+    width:100%;
+    left:0em;
+    right:0em;
+}
+
+#top_links ul {
+
+}
+
+#top_links ul li {
+    display:inline;
+    position:relative;
+    padding-right:2em;
+}
+
+#top_links a {
+    text-decoration:none;
+}
+
+#top_links a:hover {
+    color:darkred;
+}
+
+#content {
+    position:static;
+    padding-top:4em;
+    padding-left:2em;
+    padding-right:0em;
+    bottom:0em;
+}
+
+#upcoming {
+    font-size:xx-small;
+    color:gray;
+}
+
+#character_form {
+    position:fixed;
+    right:5em;
+    top:3em;
+}
+
+
+#event_form {
+    position:fixed;
+    right:5em;
+    top:18.4em;
+    bottom:0em;
+}

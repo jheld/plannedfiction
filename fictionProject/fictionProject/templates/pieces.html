@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<p>
+  There will be a list of pieces.
+</p>
+<h3>
+  Pieces
+</h3>
+<ul>
+  {% for piece in pieces %}
+  <li><a href="{% url 'piece' piece.pk %}">{{ piece.title }}</a></li>
+  {% endfor %}
+</ul>
+<hr>
+<h3>
+  Add a piece
+</h3>
+<form action="." method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit" value="Submit"/>
+</form>
+{% endblock %}
