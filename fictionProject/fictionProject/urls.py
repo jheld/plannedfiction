@@ -23,4 +23,5 @@ urlpatterns += patterns('',
                         url(r'^pieces/$', pViews.pieces, name='pieces'),
                         url(r'^pieces/(?P<pk>\d)/$',pViews.piece, name='piece'),
                         url(r'^pieces/(?P<p_pk>\d)/events/(?P<e_pk>\d)/$', pViews.event,name='event'),
+                        url(r'pieces/(?P<pk>\d)/eventTiming/$',pViews.eventTiming, name='eventTiming'),
 )

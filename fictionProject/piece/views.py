@@ -173,3 +173,8 @@ def event(request,p_pk,e_pk):
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
     return render(request, 'event.html',context)
+
+def eventTiming(request,pk):
+    context = {}
+    context['events'] = Piece.objects.get(pk=pk).events.all()
+    return render(request,'eventTiming.html',context)

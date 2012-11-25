@@ -55,3 +55,15 @@ body {
     top:18.4em;
     bottom:0em;
 }
+
+#event_timing_div_id {
+
+}
+
+.eventName_timing_span_class {
+    border: 0.02em black solid;
+    border-radius: 0.5em;
+    width:10em;
+    position:relative;
+    margin-right: 0.7em;
+}

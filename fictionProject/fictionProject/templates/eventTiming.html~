@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block js %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+
+{% endblock %}
+{% block content %}
+Event Timing page.
+<ol id="event_timing_ol_id" ondragover="allowDrop(event)" ondrop="drop(event)">
+  {% for event in events %}
+  <li class="eventName_timing_li_class" draggable="true" id="event_timing_li_{{ event.id }}" ondragstart="drag(event)">
+    {{ event.name }}
+  </li>
+  {% endfor %}
+</ol>
+{% endblock %}
