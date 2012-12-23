@@ -16,6 +16,7 @@ class Event(models.Model):
     time = models.DateTimeField(blank=True,null=True)
     # characters = models.ManyToManyField(Character, through='Membership')
     characters = models.ManyToManyField(Character, null=True,blank=True)
+    order = models.PositiveIntegerField(blank=True,null=True)
     def __unicode__(self):
         return self.name
 

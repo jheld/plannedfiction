@@ -5,6 +5,8 @@
 
 {% endblock %}
 {% block content %}
+<h2>Piece</h2>
+<a href="{% url 'piece' piecePK %}">{{ pieceTitle }}</a>
 <h3>Event Timing page.</h3>
 {% comment %}
 <ol id="event_timing_ol_id" ondragover="allowDrop(event)" ondrop="drop(event)">
@@ -18,7 +20,7 @@
 <div id="event_timing_div" ondragover="allowDrop(event)" ondrop="drop(event)" droppable="true">
   {% for event in events %}
   <span class="eventName_timing_span_class" id="event_timing_span_{{ event.id }}" draggable="true" ondragstart="drag(event)" droppable="false">
-    {{ event.name }}
+    {{ event.name }}, order: {{ event.order }}
   </span>
   {% endfor %}
 </div>

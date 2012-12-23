@@ -176,5 +176,7 @@ def event(request,p_pk,e_pk):
 
 def eventTiming(request,pk):
     context = {}
-    context['events'] = Piece.objects.get(pk=pk).events.all()
+    context['events'] = Piece.objects.get(pk=pk).events.all().order_by('order')
+    context['pieceTitle'] = Piece.objects.get(pk=pk).title
+    context['piecePK'] = pk
     return render(request,'eventTiming.html',context)
