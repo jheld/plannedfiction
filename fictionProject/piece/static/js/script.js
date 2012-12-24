@@ -60,7 +60,17 @@ $(document).ready(function() {
 	}
 
     });
-
+    $('.update_name').click(function() {
+	var c_name_piece = $(this).parent().find('input').val();
+	if ( c_name_piece.length )
+	{
+	    var parentElement = $(this).parent();
+	    var loc = $('#path').text();
+	    $.post(loc, {'changeCName':c_name_piece, 'name_type':$(parentElement).attr('id')}, function(data) {  
+		$(parentElement).find('input').val(data.c_name_piece);
+	    });	    
+	}
+    });
 });
 // using jQuery
 function getCookie(name) {

@@ -4,6 +4,7 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
 {% endblock %}
 {% block content %}
+<div id="main_pane"/>
 <h3>
   Piece
 </h3>
@@ -14,27 +15,30 @@
 <ul id="current_characters">
   {% for character in characters.all %}
   <li>
+    <a href="{% url 'character' piece.id character.id %}">
     {{ character.first_name }}
     {% if character.middle_name %}
     {{ character.middle_name }}
     {% endif %}
-    {{ character.last_name }}<ul>
+    {{ character.last_name }}
+    </a>
+    <ul>
       {% for event in events.all %}
-      {% for c in event.characters.all %}
-      {% ifequal c.pk character.pk %}
+      {% if character in event.characters.all %}
       <li>
-	<a href="{% url 'event' piece.pk event.pk %}">
+	<a href="{% url 'event' piece.id event.id %}">
 	  {{ event.name }}
 	</a>
       </li>
-      {% endifequal %}
+      {% endif %}
       {% endfor %}
-      {% endfor %}
-    </ul
+    </ul>
   </li>
   {% endfor %}
 </ul>
 <a href="{% url 'eventTiming' piece.pk %}">Event Timing</a>
+</div>
+<div id="form_envelope">
 <form method="POST" action="." id="character_form">
 <h3>Character Form</h3>
   {% csrf_token %}
@@ -44,7 +48,8 @@
   <input type="submit" value="Submit"/>
 </form>
 <form method="POST" action="." id="event_form">
-  <hr>
+<hr id="between_forms">
+
   <h3>Event Form</h3>
   {% csrf_token %}
   <table>
@@ -52,4 +57,5 @@
   </table>
   <input type="submit" value="Submit"/>
 </form>
+</div>
 {% endblock %}

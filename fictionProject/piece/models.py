@@ -14,7 +14,6 @@ class Event(models.Model):
     description = models.TextField()
     location = models.CharField(max_length=250,blank=True,null=True)
     time = models.DateTimeField(blank=True,null=True)
-    # characters = models.ManyToManyField(Character, through='Membership')
     characters = models.ManyToManyField(Character, null=True,blank=True)
     order = models.PositiveIntegerField(blank=True,null=True)
     def __unicode__(self):
@@ -26,8 +25,3 @@ class Piece(models.Model):
     characters = models.ManyToManyField(Character,null=True,blank=True)
     def __unicode__(self):
         return self.title
-'''
-class Membership(models.Model):
-    character = models.ForeignKey(Character)
-    event = models.ForeignKey(Event)
-''' 

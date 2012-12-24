@@ -11,6 +11,7 @@ class EventForm(forms.Form):
     dateTime = forms.DateTimeField(required=False)
     location = forms.CharField(max_length=250,required=False)
     characters = forms.MultipleChoiceField(choices=[],required=False)
+    order = forms.IntegerField(required=False)
     def __init__(self, p,*args, **kwargs):
         super(EventForm,self).__init__(*args,**kwargs)
         self.fields['characters'] = forms.MultipleChoiceField(choices=[(c.id, str(c)) for c in p.characters.all()] )

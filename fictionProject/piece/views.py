@@ -54,16 +54,20 @@ def piece(request,pk):
             aPiece = Piece.objects.get(pk=pk)
             aPiece.characters.add(newCharacter)
             context['form'] = CharacterForm()
+            context['event_form'] = EventForm(aPiece)
         else:
             aPiece = Piece.objects.get(pk=pk)
             form = EventForm(aPiece,request.POST)
-            print('request.POST: ', request.POST)
             if form.is_valid() and not 'age' in request.POST:
                 e_name = form.cleaned_data['name']
                 e_description = form.cleaned_data['description']
                 e_datetime = form.cleaned_data['dateTime']
                 e_location = form.cleaned_data['location']
-                newEvent = Event.objects.create(name=e_name,description=e_description,time=e_datetime,location=e_location)
+                if Event.objects.all():
+                    new_order = Event.objects.all().order_by('-order')[0].order+1
+                else:
+                    new_order = 1
+                newEvent = Event.objects.create(name=e_name,description=e_description,time=e_datetime,location=e_location, order=new_order)
                 newEvent.save()
                 aPiece = Piece.objects.get(pk=pk)
                 aPiece.events.add(newEvent)
@@ -71,7 +75,8 @@ def piece(request,pk):
                 for char in characters:
                     newEvent.characters.add(Character.objects.get(pk=char))
             context['event_form'] = EventForm(aPiece)
-            
+            context['form'] = CharacterForm()
+            print('got here!')
     elif request.is_ajax():
         context = {}
         if request.method == 'POST':
@@ -84,7 +89,7 @@ def piece(request,pk):
                 context['changePieceTitle'] = aPiece.title
                 data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
-
+    print('events: ',context['events'])
     return render(request, 'piece.html', context)
 
 def event(request,p_pk,e_pk):
@@ -180,3 +185,31 @@ def eventTiming(request,pk):
     context['pieceTitle'] = Piece.objects.get(pk=pk).title
     context['piecePK'] = pk
     return render(request,'eventTiming.html',context)
+def characters(request,p_pk,ch_pk):
+    context = {}
+    context['character'] = Character.objects.get(pk=ch_pk)
+    context['pieceTitle'] = Piece.objects.get(pk=p_pk).title
+    context['piecePK'] = p_pk
+    if request.is_ajax():
+        if request.method == 'POST':
+            context = {}
+            if 'changeCName' in request.POST:
+                c = Character.objects.get(pk=ch_pk)
+                c_name_piece = request.POST['changeCName']
+                name_type = request.POST['name_type']
+                if name_type == 'c_fName':
+                    c.first_name = c_name_piece
+                    c.save()
+                    context['c_name_piece'] = c.first_name
+
+                elif name_type == 'c_mName':
+                    c.middle_name = c_name_piece
+                    c.save()
+                    context['c_name_piece'] = c.middle_name
+                elif name_type == 'c_lName':
+                    c.last_name = c_name_piece
+                    c.save()
+                    context['c_name_piece'] = c.last_name
+            data = json.dumps(context)
+            return HttpResponse(data,mimetype='application/json')
+    return render(request, 'character.html', context)

@@ -17,11 +17,11 @@
   {% endfor %}
 </ol>
 {% endcomment %}
-<div id="event_timing_div" ondragover="allowDrop(event)" ondrop="drop(event)" droppable="true">
+<div id="event_timing_div" ondragover="allowDrop(event)" ondrop="drop(event)" droppable="true" style="border: dashed 1px black;">
   {% for event in events %}
-  <span class="eventName_timing_span_class" id="event_timing_span_{{ event.id }}" draggable="true" ondragstart="drag(event)" droppable="false">
+  <span class="eventName_timing_span_class" id="event_timing_span_{{ event.id }}" draggable="true" ondragstart="drag(event)" droppable="false" style="border: dashed 2px purple;">
     {{ event.name }}, order: {{ event.order }}
-  </span>
+  </span><br/>
   {% endfor %}
 </div>
 {% endblock %}
