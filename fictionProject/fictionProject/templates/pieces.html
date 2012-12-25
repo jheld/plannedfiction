@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<p>
-  There will be a list of pieces.
-</p>
 <h3>
   Pieces
 </h3>
 <ul>
   {% for piece in pieces %}
   <li><a href="{% url 'piece' piece.pk %}">{{ piece.title }}</a></li>
+  {% empty %}
+  <p>You haven't planned any pieces, yet.</p>
   {% endfor %}
 </ul>
 <hr>

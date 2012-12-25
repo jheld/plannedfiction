@@ -3,6 +3,7 @@ import json
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.forms.util import ErrorList
 
 from forms import PieceForm, EventForm, CharacterForm
 from models import *
@@ -13,17 +14,21 @@ def index(request):
 
 def pieces(request):
     context = {}
+    context['pieces'] = Piece.objects.all()    
     if request.method == 'GET':
-        context['pieces'] = Piece.objects.all()
         context['form'] = PieceForm()
     elif request.method == 'POST':
         form = PieceForm(request.POST)
         if form.is_valid():
-            new_title = form.cleaned_data['title']
-            newPiece = Piece.objects.create(title=new_title)
-            newPiece.save()
-        context['form'] = PieceForm()
-        context['pieces'] = Piece.objects.all()
+            try:
+                new_title = form.cleaned_data['title']
+                newPiece = Piece.objects.create(title=new_title)
+                newPiece.save()
+                form = PieceForm()
+            except:
+                form._errors['title'] = ErrorList([u'Title must be unique!'])
+            context['form'] = form
+
     return render(request,'pieces.html',context)
     
 def piece(request,pk):

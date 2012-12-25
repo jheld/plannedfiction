@@ -20,7 +20,7 @@ class Event(models.Model):
         return self.name
 
 class Piece(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100,unique=True)
     events = models.ManyToManyField(Event,null=True,blank=True)
     characters = models.ManyToManyField(Character,null=True,blank=True)
     def __unicode__(self):
