@@ -27,6 +27,15 @@ $(document).ready(function() {
 	    });
 	}
     });
+    $('#e_order_submit').click(function() {
+	var e_order = $('#e_order').val();
+	if ( e_order.length ) {
+	    var loc = $('#path').text();
+	    $.post(loc, {'e_order':e_order}, function(data) {  
+		$('#e_order').val(data.e_order);
+	    });
+	}
+    });
     $('.remove_char_event').live('click',function() {
 	var eCharName = $(this).parent().find('.first_name').text();
 	eCharName += $(this).parent().find('.middle_name').text();
@@ -68,6 +77,17 @@ $(document).ready(function() {
 	    var loc = $('#path').text();
 	    $.post(loc, {'changeCName':c_name_piece, 'name_type':$(parentElement).attr('id')}, function(data) {  
 		$(parentElement).find('input').val(data.c_name_piece);
+	    });	    
+	}
+    });
+    $('.update_age').click(function() {
+	var c_age = $(this).parent().find('input').val();
+	if ( c_age.length )
+	{
+	    var parentElement = $(this).parent();
+	    var loc = $('#path').text();
+	    $.post(loc, {'changeCAge':c_age}, function(data) {  
+		$(parentElement).find('input').val(data['changeCAge']);
 	    });	    
 	}
     });

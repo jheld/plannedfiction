@@ -34,7 +34,7 @@ def pieces(request):
 def piece(request,pk):
     context = {}
     aPiece = Piece.objects.get(pk=pk)
-    context['events'] = aPiece.events.all()
+    context['events'] = aPiece.events.all().order_by('order')
     context['characters'] = aPiece.characters.all()
     context['piece'] = aPiece
     context['path'] = request.get_full_path()
@@ -68,7 +68,7 @@ def piece(request,pk):
                 e_description = form.cleaned_data['description']
                 e_datetime = form.cleaned_data['dateTime']
                 e_location = form.cleaned_data['location']
-                if Event.objects.all():
+                if len(Event.objects.all()):
                     new_order = Event.objects.all().order_by('-order')[0].order+1
                 else:
                     new_order = 1
@@ -179,7 +179,11 @@ def event(request,p_pk,e_pk):
                     theEvent.characters.add(character)
                 if name:
                     context['addCharacter'] = None
-
+            elif 'e_order' in request.POST:
+                e_order = request.POST['e_order']
+                theEvent.order = e_order
+                theEvent.save()
+                context['e_order'] = theEvent.order
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
     return render(request, 'event.html',context)
@@ -195,6 +199,7 @@ def characters(request,p_pk,ch_pk):
     context['character'] = Character.objects.get(pk=ch_pk)
     context['pieceTitle'] = Piece.objects.get(pk=p_pk).title
     context['piecePK'] = p_pk
+    context['genderOptions'] = ['Male','Female']
     if request.is_ajax():
         if request.method == 'POST':
             context = {}
@@ -215,6 +220,12 @@ def characters(request,p_pk,ch_pk):
                     c.last_name = c_name_piece
                     c.save()
                     context['c_name_piece'] = c.last_name
+            elif 'changeCAge' in request.POST:
+                c = Character.objects.get(pk=ch_pk)
+                c_age = request.POST['changeCAge']
+                c.age = c_age
+                c.save()
+                context['changeCAge'] = c.age
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
     return render(request, 'character.html', context)

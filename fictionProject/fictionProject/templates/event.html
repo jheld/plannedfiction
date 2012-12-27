@@ -13,6 +13,7 @@
 <h3>Description</h3>
 <textarea id="update_e_description"rows="4" cols="60">{{ event.description }}</textarea>
 <button id="e_description_submit">Update</button>
+<br/><label forid="e_order">Order: </label><input value="{{ event.order }}" id="e_order"/><button id="e_order_submit">Update</button>
 <h3>Characters Involved</h3>
 <ul id="chars_in_event_ul">
   {% for character in characters %}
