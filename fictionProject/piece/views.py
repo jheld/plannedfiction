@@ -226,6 +226,13 @@ def characters(request,p_pk,ch_pk):
                 c.age = c_age
                 c.save()
                 context['changeCAge'] = c.age
+            elif 'changeCGender' in request.POST:
+                c = Character.objects.get(pk=ch_pk)
+                c_gender = request.POST['changeCGender']
+                c.gender = c_gender
+                c.save()
+                context['changeCGender'] = c.gender
+
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
     return render(request, 'character.html', context)

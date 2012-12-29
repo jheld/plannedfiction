@@ -91,6 +91,18 @@ $(document).ready(function() {
 	    });	    
 	}
     });
+    $('.update_gender').click(function() {
+	var c_gender = $(this).parent().find('input').val();
+	if ( c_gender.length )
+	{
+	    var parentElement = $(this).parent();
+	    var loc = $('#path').text();
+	    $.post(loc, {'changeCGender':c_gender}, function(data) {  
+		$(parentElement).find('input').val(data['changeCGender']);
+	    });	    
+	}
+    });
+
 });
 // using jQuery
 function getCookie(name) {
