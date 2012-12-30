@@ -102,6 +102,25 @@ $(document).ready(function() {
 	    });	    
 	}
     });
+    $('#character_search_submit').click(function() {
+	var character_search_input = $(this).parent().find('#character_search_input').val();
+	if ( character_search_input.length )
+	{
+	    var parentElement = $(this).parent();
+	    var loc = $('#path').text();
+	    $.get(loc, {'character_search_input':character_search_input}, function(data) {  
+		//$(parentElement).find('#results').val(data['characters_search']);
+		$('#character_results_header').show('slow');
+		$(document).find('#character_results_ul').empty();
+		for ( var i = 0; i < data['characters_results'].length; i++  )
+		{
+		    var result_str = data['characters_results'][i];
+		    $(document).find('#character_results_ul').append('<li><a href='+result_str[1]+'>'+result_str[0].toString()+'</li>');
+		    
+		}
+	    });	    
+	}
+    });
 
 });
 // using jQuery

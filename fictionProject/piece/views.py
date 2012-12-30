@@ -10,6 +10,37 @@ from models import *
 
 def index(request):
     context = {}
+    if request.is_ajax():
+        if request.method == 'GET':
+            if 'character_search_input' in request.GET:
+                character_search = request.GET['character_search_input']
+                first_name = ''
+                last_name = ''
+                middle_name = ''
+                search_name = character_search.split(' ')
+                if search_name:
+                    first_name = search_name[0]
+                    if len(search_name) > 1:
+                        last_name = search_name[-1]
+                        if len(search_name) > 2:
+                            middle_name = search_name[1]
+                if first_name:
+                    characters_results = Character.objects.filter(first_name=first_name)
+                if middle_name and last_name:
+                    characters_results = characters_results.objects.filter(midde_name=midde_name,last_name=last_name)
+                print(characters_results)
+                if characters_results:
+                    formatted_results = []
+                    for character_result in characters_results:
+                        full_name = character_result.__unicode__().replace('  ', ' ')
+                        formatted_results.append([full_name,character_result.id])
+                    print(formatted_results)
+                    context['characters_results'] = formatted_results
+                else:
+                    context['characters_results'] = ['No results.','']
+            data = json.dumps(context)
+            return HttpResponse(data,mimetype='application/json')
+
     return render(request,'index.html',context)
 
 def pieces(request):
@@ -81,7 +112,6 @@ def piece(request,pk):
                     newEvent.characters.add(Character.objects.get(pk=char))
             context['event_form'] = EventForm(aPiece)
             context['form'] = CharacterForm()
-            print('got here!')
     elif request.is_ajax():
         context = {}
         if request.method == 'POST':

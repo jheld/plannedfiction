@@ -1,9 +1,21 @@
 {% extends "base.html" %}
+{% block js %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+{% endblock %}
 {% block content %}
-<p>
-  Index page!
-</p>
-<p id="upcoming">
-  Soon, there will be content!
-</p>
+<div id="character_search">
+  <h3>
+    Character Search
+  </h3>
+  <input type="text" value="" id="character_search_input" placeholder="Harry Potter"/>
+  <input type="submit" value="Search" id="character_search_submit"/>
+  <div id="character_results">
+    <h4 id="character_results_header">
+      Results
+    </h4>
+    <ul id="character_results_ul">
+    </ul>
+  </div>
+</div>
 {% endblock %}

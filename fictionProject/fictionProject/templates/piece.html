@@ -4,58 +4,107 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
 {% endblock %}
 {% block content %}
-<div id="main_pane"/>
-<h3>
-  Piece
-</h3>
-<input id="piece_title_input_id" value="{{ piece.title }}"/><button id="update_piece_title_button_id">Update</button>
-<h4>
-  Characters
-</h4>
-<ul id="current_characters">
-  {% for character in characters.all %}
-  <li>
-    <a href="{% url 'character' piece.id character.id %}">
-    {{ character.first_name }}
-    {% if character.middle_name %}
-    {{ character.middle_name }}
-    {% endif %}
-    {{ character.last_name }}
-    </a>
-    <ul>
+<div id="main_pane">
+  <h3>
+    Piece
+  </h3>
+  <div id="update_piece">
+    <input id="piece_title_input_id" value="{{ piece.title }}"/>
+    <button id="update_piece_title_button_id">Update</button>
+  </div>
+  <div id="characters">
+    <h4>
+      Characters
+    </h4>
+    <p id="upcoming">
+      Order doesn't work yet.
+    </p>
+    <select id="character_order">
+      <option>
+	Ascending Order
+      </option>
+      <option>
+	Descending Order
+      </option>
+      <option>
+	Ascending Alphabetical
+      </option>
+      <option>
+	Descending Alphabetical
+      </option>
+    </select>
+
+    <ul id="current_characters">
+      {% for character in characters.all %}
+      <li>
+	<a href="{% url 'character' piece.id character.id %}">
+	  {{ character.first_name }}
+	  {% if character.middle_name %}
+	  {{ character.middle_name }}
+	  {% endif %}
+	  {{ character.last_name }}
+	</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="events">
+    <h4>
+      Events
+    </h4>
+    <p id="upcoming">
+      Order doesn't work yet.
+    </p>
+    <select id="event_order">
+      <option>
+	Ascending Order
+      </option>
+      <option>
+	Descending Order
+      </option>
+      <option>
+	Ascending Alphabetical
+      </option>
+      <option>
+	Descending Alphabetical
+      </option>
+    </select>
+    <ul id="current_events">
       {% for event in events.all %}
-      {% if character in event.characters.all %}
       <li>
 	<a href="{% url 'event' piece.id event.id %}">
 	  {{ event.name }}
 	</a>
       </li>
-      {% endif %}
+      {% empty %}
+      <li>
+	You have no events, yet.
+      </li>
       {% endfor %}
     </ul>
-  </li>
-  {% endfor %}
-</ul>
-<a href="{% url 'eventTiming' piece.pk %}">Event Timing</a>
+  </div>
+  <article id="eventTiming">
+    <a href="{% url 'eventTiming' piece.pk %}">Event Timing</a>
+  </article>
 </div>
 <div id="form_envelope">
-<form method="POST" action="." id="character_form">
-<h3>Character Form</h3>
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <input type="submit" value="Submit"/>
-</form>
-<form method="POST" action="." id="event_form">
-<hr id="between_forms">
+  <form method="POST" action="." id="character_form">
+    <h3>Character Form</h3>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+  </form>
+  <form method="POST" action="." id="event_form">
+    <hr id="between_forms">
 
-  <h3>Event Form</h3>
-  {% csrf_token %}
-  <table>
-    {{ event_form.as_table }}
-  </table>
-  <input type="submit" value="Submit"/>
-</form>
+    <h3>Event Form</h3>
+    {% csrf_token %}
+    <table>
+      {{ event_form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+  </form>
 </div>
 {% endblock %}
