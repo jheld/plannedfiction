@@ -18,11 +18,7 @@
 <ul id="chars_in_event_ul">
   {% for character in characters %}
   <li class="char_name_event">
-    <span class="first_name">{{ character.first_name }} </span>
-    {% if character.middle_name %} 
-    <span class="middle_name">{{ character.middle_name }} </span> 
-    {% endif %} 
-    <span class="last_name">{{ character.last_name }}</span>
+    <span class="name">{{ character.name }} </span>
     <button class="remove_char_event">Remove from event</button>
   </li>
   {% empty %}
@@ -32,16 +28,12 @@
   {% endfor %}
 </ul>
 <hr>
-<h3>All Characters in {{ pieceTitle }}</h3>
+<h3>Characters not in event</h3>
 <ul id="chars_not_in_event_ul">
   {% for character in allCharacters %}
   {% if not character in characters %}
   <li class="char_name_piece">
-    <span class="first_name">{{ character.first_name }} </span>
-    {% if character.middle_name %}
-    <span class="middle_name">{{ character.middle_name }} </span>
-    {% endif %}
-    <span class="last_name">{{ character.last_name }}</span>
+    <span class="name">{{ character.name }}</span>
     <button class="add_char_event">Add to event</button>
   </li>
   {% endif %}

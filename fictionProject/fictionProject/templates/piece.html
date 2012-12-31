@@ -38,11 +38,7 @@
       {% for character in characters.all %}
       <li>
 	<a href="{% url 'character' piece.id character.id %}">
-	  {{ character.first_name }}
-	  {% if character.middle_name %}
-	  {{ character.middle_name }}
-	  {% endif %}
-	  {{ character.last_name }}
+	  {{ character.name }}
 	</a>
       </li>
       {% endfor %}

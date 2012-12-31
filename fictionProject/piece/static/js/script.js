@@ -18,6 +18,23 @@ $(document).ready(function() {
 	    });
 	}
     });
+    if ( !$('#chars_not_in_event_ul li').size() )
+    {
+	$('#chars_not_in_event_ul').append('<li id="no_chars">No characters not included</li>');
+    }
+    
+    $('#chars_not_in_event_ul').live('change',function() {
+	alert('hi');
+	if ( !$('#chars_not_in_event_ul li').size() )
+	{
+	    $('#chars_not_in_event_ul').empty();
+	}
+	else
+	{
+	    $('#chars_not_in_event_ul').firstChild().remove();
+	}
+    });
+
     $('#e_description_submit').click(function() {
 	var eDescription = $('#update_e_description').val();
 	if ( eDescription.length ) {
@@ -37,30 +54,32 @@ $(document).ready(function() {
 	}
     });
     $('.remove_char_event').live('click',function() {
-	var eCharName = $(this).parent().find('.first_name').text();
-	eCharName += $(this).parent().find('.middle_name').text();
-	eCharName += $(this).parent().find('.last_name').text();
+	var eCharName = $(this).parent().find('.name').text();
 	var parentElement = $(this).parent();
 	if ( eCharName.length ) {
 	    var loc = $('#path').text();
 	    $.post(loc, {'charName':eCharName}, function(data) {  
 		$(parentElement).remove();
+		
+		$('#chars_not_in_event_ul').find('#no_chars').remove();
 		$(parentElement).find('.remove_char_event').text('Add to event')
 		$(parentElement).find('.remove_char_event').attr('class','add_char_event');
-		$(parentElement).attr('class','char_name_piece');
+		$(parentElement).attr('class','char_name');
 		$('#chars_not_in_event_ul').append(parentElement);
 	    });
 	}
     });
     $('.add_char_event').live('click',function() {
-	var eCharName = $(this).parent().find('.first_name').text();
-	eCharName += $(this).parent().find('.middle_name').text();
-	eCharName += $(this).parent().find('.last_name').text();
+	var eCharName = $(this).parent().find('.name').text();
 	var parentElement = $(this).parent();
 	if ( eCharName.length ) {
 	    var loc = $('#path').text();
 	    $.post(loc, {'addCharacter':eCharName}, function(data) {  
 		$(parentElement).remove();
+		if ( !$('#chars_not_in_event_ul li').size() )
+		{
+		    $('#chars_not_in_event_ul').append('<li id="no_chars">No characters not included</li>');
+		}
 		$(parentElement).find('.add_char_event').text('Remove from event')
 		$(parentElement).find('.add_char_event').attr('class','remove_char_event');
 		$(parentElement).attr('class','char_name_event');
@@ -70,13 +89,13 @@ $(document).ready(function() {
 
     });
     $('.update_name').click(function() {
-	var c_name_piece = $(this).parent().find('input').val();
-	if ( c_name_piece.length )
+	var c_name = $(this).parent().find('input').val();
+	if ( c_name.length )
 	{
 	    var parentElement = $(this).parent();
 	    var loc = $('#path').text();
-	    $.post(loc, {'changeCName':c_name_piece, 'name_type':$(parentElement).attr('id')}, function(data) {  
-		$(parentElement).find('input').val(data.c_name_piece);
+	    $.post(loc, {'changeCName':c_name, 'name_type':$(parentElement).attr('id')}, function(data) {  
+		$(parentElement).find('input').val(data.c_name);
 	    });	    
 	}
     });

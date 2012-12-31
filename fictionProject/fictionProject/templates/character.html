@@ -8,9 +8,7 @@
 <a href="{% url 'piece' piecePK %}">{{ pieceTitle }}</a>
 <h3>Character</h3>
 <ul>
-  <li id="c_fName">First Name: <input value="{{ character.first_name }}"/><button class="update_name">Update</button></li>
-  <li id="c_mName">Middle Name: <input value="{{ character.middle_name }}"/><button class="update_name">Update</button></li>
-  <li id="c_lName">Last Name: <input value="{{ character.last_name }}"/><button class="update_name">Update</button></li>
+  <li id="c_name">Name: <input value="{{ character.name }}"/><button class="update_name">Update</button></li>
   <li id="c_age">Age: <input value="{{ character.age }}"/><button class="update_age">Update</button></li>
   <li id="c_gender">Gender: <input value="{{ character.gender }}"/><button class="update_gender">Update</button></li>
 </ul>

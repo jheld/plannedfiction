@@ -1,13 +1,11 @@
 from django.db import models
 
 class Character(models.Model):
-    first_name = models.CharField(max_length=20,blank=True,null=True)
-    middle_name = models.CharField(max_length=20,blank=True,null=True)
-    last_name = models.CharField(max_length=30,blank=True,null=True)
+    name = models.CharField(max_length=60,blank=False,null=False)
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=30)
     def __unicode__(self):
-        return '{0} {1} {2}'.format(self.first_name,self.middle_name,self.last_name)
+        return self.name
 
 class Event(models.Model):
     name = models.CharField(max_length=250)

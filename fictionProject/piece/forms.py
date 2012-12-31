@@ -17,9 +17,7 @@ class EventForm(forms.Form):
         self.fields['characters'] = forms.MultipleChoiceField(choices=[(c.id, str(c)) for c in p.characters.all()] )
 
 class CharacterForm(forms.Form):
-    first_name = forms.CharField(max_length=20,required=False)
-    middle_name = forms.CharField(max_length=20,required=False)
-    last_name = forms.CharField(max_length=30,required=False)
+    name = forms.CharField(max_length=60,required=False)
     age = forms.IntegerField()
     gender = forms.CharField(max_length=30)
     

@@ -14,20 +14,7 @@ def index(request):
         if request.method == 'GET':
             if 'character_search_input' in request.GET:
                 character_search = request.GET['character_search_input']
-                first_name = ''
-                last_name = ''
-                middle_name = ''
-                search_name = character_search.split(' ')
-                if search_name:
-                    first_name = search_name[0]
-                    if len(search_name) > 1:
-                        last_name = search_name[-1]
-                        if len(search_name) > 2:
-                            middle_name = search_name[1]
-                if first_name:
-                    characters_results = Character.objects.filter(first_name=first_name)
-                if middle_name and last_name:
-                    characters_results = characters_results.objects.filter(midde_name=midde_name,last_name=last_name)
+                characters_results = Character.objects.filter(name=character_search)
                 if characters_results:
                     formatted_results = []
                     for character_result in characters_results:
@@ -80,12 +67,10 @@ def piece(request,pk):
     elif request.method == 'POST' and not request.is_ajax():
         form = CharacterForm(request.POST)
         if form.is_valid() and 'age' in request.POST:
-            new_fName = form.cleaned_data['first_name']
-            new_mName = form.cleaned_data['middle_name']
-            new_lName = form.cleaned_data['last_name']
+            new_name = form.cleaned_data['name']
             new_age = form.cleaned_data['age']
             new_gender = form.cleaned_data['gender']
-            newCharacter = Character.objects.create(first_name=new_fName,middle_name=new_mName,last_name=new_lName,age=new_age,gender=new_gender)
+            newCharacter = Character.objects.create(name=new_name,age=new_age,gender=new_gender)
             newCharacter.save()
             aPiece = Piece.objects.get(pk=pk)
             aPiece.characters.add(newCharacter)
@@ -185,29 +170,17 @@ def event(request,p_pk,e_pk):
                     context['description'] = theEvent.description
             elif 'charName' in request.POST:
                 name = request.POST['charName']
-                mName = ''
-                if len(name.split(' ')) == 3:
-                    mName = name.split(' ')[1]
-                character = Character.objects.get(first_name=name.split(' ')[0],middle_name=mName,last_name=name.split(' ')[-1])
+                character = Character.objects.get(name=name)
                 if character in theEvent.characters.all():
                     theEvent.characters.remove(character)
-                '''
-                for c in theEvent.characters.all():
-                    if c.pk == character.pk:
-                        theEvent.characters.remove(c)
-                        break
-                '''
-                if name:
+                if character.name:
                     context['charName'] = None
             elif 'addCharacter' in request.POST:
                 name = request.POST['addCharacter']
-                mName = ''
-                if len(name.split(' ')) == 3:
-                    mName = name.split(' ')[1]
-                character = Character.objects.get(first_name=name.split(' ')[0],middle_name=mName,last_name=name.split(' ')[-1])
+                character = Character.objects.get(name=name)
                 if not character in theEvent.characters.all():
                     theEvent.characters.add(character)
-                if name:
+                if character.name:
                     context['addCharacter'] = None
             elif 'e_order' in request.POST:
                 e_order = request.POST['e_order']
@@ -235,21 +208,10 @@ def characters(request,p_pk,ch_pk):
             context = {}
             if 'changeCName' in request.POST:
                 c = Character.objects.get(pk=ch_pk)
-                c_name_piece = request.POST['changeCName']
-                name_type = request.POST['name_type']
-                if name_type == 'c_fName':
-                    c.first_name = c_name_piece
-                    c.save()
-                    context['c_name_piece'] = c.first_name
-
-                elif name_type == 'c_mName':
-                    c.middle_name = c_name_piece
-                    c.save()
-                    context['c_name_piece'] = c.middle_name
-                elif name_type == 'c_lName':
-                    c.last_name = c_name_piece
-                    c.save()
-                    context['c_name_piece'] = c.last_name
+                c_name = request.POST['changeCName']
+                c.name = c_name
+                c.save()
+                context['c_name'] = c.name
             elif 'changeCAge' in request.POST:
                 c = Character.objects.get(pk=ch_pk)
                 c_age = request.POST['changeCAge']
