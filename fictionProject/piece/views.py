@@ -28,16 +28,16 @@ def index(request):
                     characters_results = Character.objects.filter(first_name=first_name)
                 if middle_name and last_name:
                     characters_results = characters_results.objects.filter(midde_name=midde_name,last_name=last_name)
-                print(characters_results)
                 if characters_results:
                     formatted_results = []
                     for character_result in characters_results:
                         full_name = character_result.__unicode__().replace('  ', ' ')
-                        formatted_results.append([full_name,character_result.id])
-                    print(formatted_results)
+                        for piece in Piece.objects.all():
+                            if character_result in piece.characters.all():
+                                formatted_results.append([full_name,piece.id,character_result.id,piece.title])
                     context['characters_results'] = formatted_results
                 else:
-                    context['characters_results'] = ['No results.','']
+                    context['characters_results'] = ['No results.']
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
 

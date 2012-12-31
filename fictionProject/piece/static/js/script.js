@@ -109,13 +109,19 @@ $(document).ready(function() {
 	    var parentElement = $(this).parent();
 	    var loc = $('#path').text();
 	    $.get(loc, {'character_search_input':character_search_input}, function(data) {  
-		//$(parentElement).find('#results').val(data['characters_search']);
 		$('#character_results_header').show('slow');
 		$(document).find('#character_results_ul').empty();
-		for ( var i = 0; i < data['characters_results'].length; i++  )
+		if ( data['characters_results'].length == 1 )
 		{
-		    var result_str = data['characters_results'][i];
-		    $(document).find('#character_results_ul').append('<li><a href='+result_str[1]+'>'+result_str[0].toString()+'</li>');
+		    $(document).find('#character_results_ul').append('<li>'+data['characters_results'][0].toString()+'</li>');
+		}
+		else
+		{
+		    for ( var i = 0; i < data['characters_results'].length; i++  )
+		    {
+			var result_str = data['characters_results'][i];
+			$(document).find('#character_results_ul').append('<li><a href=pieces/'+result_str[1]+'/characters/'+result_str[2]+'>'+result_str[0].toString()+'<ul><li><a href="pieces/'+result_str[1]+'/">'+result_str[3]+'</a></li></ul></li>');		    
+		    }
 		    
 		}
 	    });	    
