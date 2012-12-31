@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'piece',
     # 3rd Party
     'south',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -162,3 +163,5 @@ LOGGING = {
         },
     }
 }
+
+ACCOUNT_ACTIVATION_DAYS = 7

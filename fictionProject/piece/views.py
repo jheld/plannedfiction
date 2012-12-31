@@ -14,7 +14,7 @@ def index(request):
         if request.method == 'GET':
             if 'character_search_input' in request.GET:
                 character_search = request.GET['character_search_input']
-                characters_results = Character.objects.filter(name=character_search)
+                characters_results = Character.objects.filter(name__contains=character_search)
                 if characters_results:
                     formatted_results = []
                     for character_result in characters_results:

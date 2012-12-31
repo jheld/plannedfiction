@@ -130,7 +130,7 @@ $(document).ready(function() {
 	    $.get(loc, {'character_search_input':character_search_input}, function(data) {  
 		$('#character_results_header').show('slow');
 		$(document).find('#character_results_ul').empty();
-		if ( data['characters_results'].length == 1 )
+		if ( data['characters_results'].length == 1 && data['characters_results'].toString().indexOf(',') == -1 )
 		{
 		    $(document).find('#character_results_ul').append('<li>'+data['characters_results'][0].toString()+'</li>');
 		}
