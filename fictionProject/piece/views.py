@@ -4,6 +4,8 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms.util import ErrorList
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 from forms import PieceForm, EventForm, CharacterForm
 from models import *
@@ -29,7 +31,7 @@ def index(request):
             return HttpResponse(data,mimetype='application/json')
 
     return render(request,'index.html',context)
-
+@login_required
 def pieces(request):
     context = {}
     context['pieces'] = Piece.objects.all()    
@@ -228,3 +230,25 @@ def characters(request,p_pk,ch_pk):
             data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
     return render(request, 'character.html', context)
+
+def my_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    print('my_login')
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+            return render(request,'pieces.html',{})
+        else:
+            # Return a 'disabled account' error message
+            return render(request,'registration/login.html',{'error':'disabled account'})
+    else:
+        # Return an 'invalid login' error message.
+        return render(request,'registration/login.html',{'error':'invalid login','next':'/'})
+
+def my_logout(request):    
+    logout(request)
+    return render(request,'registration/login.html',{})
+    
