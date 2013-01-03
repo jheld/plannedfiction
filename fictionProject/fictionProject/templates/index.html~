@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-<p>
-  Index page!
-</p>
-<p>
-  Soon, there will be content!
-</p>
-{% endblock %}
