@@ -123,6 +123,9 @@ $(document).ready(function() {
     });
     $('#character_search_submit').click(function() {
 	var character_search_input = $(this).parent().find('#character_search_input').val();
+    character_search_input = character_search_input.replace(/^\s+/,'');
+    character_search_input = character_search_input.replace(/\s+$/,'');
+    $(this).parent().find('#character_search_input').val(character_search_input);
 	if ( character_search_input.length )
 	{
 	    var parentElement = $(this).parent();
