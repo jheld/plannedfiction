@@ -75,6 +75,9 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     join(join(PROJECT_PATH,pardir),'piece/static'),
+    join(join(PROJECT_PATH,pardir),'event/static'),
+    join(join(PROJECT_PATH,pardir),'subject/static'),
+    join(join(PROJECT_PATH,pardir),'userAccount/static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -130,6 +133,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # In-house
     'piece',
+    'event',
+    'userAccount',
+    'subject',
     # 3rd Party
     'south',
     'registration',
@@ -165,4 +171,4 @@ LOGGING = {
 }
 
 ACCOUNT_ACTIVATION_DAYS = 7
-AUTH_PROFILE_MODULE = 'piece.UserProfile'
+AUTH_PROFILE_MODULE = 'userAccount.UserProfile'

@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 from forms import PieceForm, EventForm, CharacterForm
-from models import *
+from models import Piece
+from event.models import Event
+from subject.models import Character
 
 def index(request):
     context = {}
@@ -111,144 +113,9 @@ def piece(request,pk):
                 context['changePieceTitle'] = aPiece.title
                 data = json.dumps(context)
             return HttpResponse(data,mimetype='application/json')
-    print('events: ',context['events'])
     return render(request, 'piece.html', context)
 
-def event(request,p_pk,e_pk):
-    context = {}
-    context['p_pk'] = p_pk
-    context['pieceTitle'] = Piece.objects.get(pk=p_pk).title
-    context['path'] = request.get_full_path()
-    if request.method == 'GET' and not request.is_ajax():
-        anEvent = Event.objects.get(pk=e_pk)
-        context['event'] = anEvent
-        context['characters'] = anEvent.characters.all()
-        context['form'] = EventForm(Piece.objects.get(pk=p_pk))
-        context['allCharacters'] = Piece.objects.get(pk=p_pk).characters.all()
-    elif request.method == 'POST' and not request.is_ajax():
-        form = EventForm(request.POST)
-        if form.is_valid():
-            theEvent = Event.objects.get(pk=e_pk)
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            location = form.cleaned_data['location']
-            context['form'] = EventForm()
-            if len(name):
-                theEvent.name = name
-            if len(description):
-                theEvent.description = description
-            if len(location):
-                theEvent.location = location
-            theEvent.save()
-            context['event'] = theEvent
-            context['characters'] = Character.objects.filter(events=e_pk)
-        else:
-            context['event'] = theEvent
-            context['characters'] = Character.objects.filter(events=e_pk)
-            context['form'] = EventForm(data=request.POST)
-    elif request.is_ajax():
-        if request.method == 'GET':
-            pass
-        elif request.method == 'POST':
-            theEvent = Event.objects.get(pk=e_pk)
-            changed = False
-            if 'name' in request.POST:
-                name = request.POST['name']
-                if not name == theEvent.name and len(name):
-                    theEvent.name = name
-                    changed = True
-                if changed:
-                    theEvent.save()
-                if name:
-                    context['name'] = theEvent.name
-            elif 'description' in request.POST:
-                description = request.POST['description']
-                if not description == theEvent.description and len(description):
-                    theEvent.description = description
-                    changed = True
-                if changed:
-                    theEvent.save()
-                if description:
-                    context['description'] = theEvent.description
-            elif 'charName' in request.POST:
-                name = request.POST['charName']
-                character = Character.objects.get(name=name)
-                if character in theEvent.characters.all():
-                    theEvent.characters.remove(character)
-                if character.name:
-                    context['charName'] = None
-            elif 'addCharacter' in request.POST:
-                name = request.POST['addCharacter']
-                character = Character.objects.get(name=name)
-                if not character in theEvent.characters.all():
-                    theEvent.characters.add(character)
-                if character.name:
-                    context['addCharacter'] = None
-            elif 'e_order' in request.POST:
-                e_order = request.POST['e_order']
-                theEvent.order = e_order
-                theEvent.save()
-                context['e_order'] = theEvent.order
-            data = json.dumps(context)
-            return HttpResponse(data,mimetype='application/json')
-    return render(request, 'event.html',context)
 
-def eventTiming(request,pk):
-    context = {}
-    context['events'] = Piece.objects.get(pk=pk).events.all().order_by('order')
-    context['pieceTitle'] = Piece.objects.get(pk=pk).title
-    context['piecePK'] = pk
-    return render(request,'eventTiming.html',context)
-def characters(request,p_pk,ch_pk):
-    context = {}
-    context['character'] = Character.objects.get(pk=ch_pk)
-    context['pieceTitle'] = Piece.objects.get(pk=p_pk).title
-    context['piecePK'] = p_pk
-    context['genderOptions'] = ['Male','Female']
-    if request.is_ajax():
-        if request.method == 'POST':
-            context = {}
-            if 'changeCName' in request.POST:
-                c = Character.objects.get(pk=ch_pk)
-                c_name = request.POST['changeCName']
-                c.name = c_name
-                c.save()
-                context['c_name'] = c.name
-            elif 'changeCAge' in request.POST:
-                c = Character.objects.get(pk=ch_pk)
-                c_age = request.POST['changeCAge']
-                c.age = c_age
-                c.save()
-                context['changeCAge'] = c.age
-            elif 'changeCGender' in request.POST:
-                c = Character.objects.get(pk=ch_pk)
-                c_gender = request.POST['changeCGender']
-                c.gender = c_gender
-                c.save()
-                context['changeCGender'] = c.gender
 
-            data = json.dumps(context)
-            return HttpResponse(data,mimetype='application/json')
-    return render(request, 'character.html', context)
 
-def my_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    print('my_login')
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            # Redirect to a success page.
-            return render(request,'pieces.html',{})
-        else:
-            # Return a 'disabled account' error message
-            return render(request,'registration/login.html',{'error':'disabled account'})
-    else:
-        # Return an 'invalid login' error message.
-        return render(request,'registration/login.html',{'error':'invalid login','next':'/'})
-
-def my_logout(request):    
-    logout(request)
-    return render(request,'registration/login.html',{})
     

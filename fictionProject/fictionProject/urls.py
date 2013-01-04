@@ -21,15 +21,18 @@ urlpatterns = patterns('',
 )
 
 from piece import views as pViews
+from event import views as eViews
+from subject import views as sViews
+from userAccount import views as uaViews
 
 urlpatterns += patterns('',
                         url(r'^$', pViews.index, name='index'),
                         url(r'^pieces/$', pViews.pieces, name='pieces'),
                         url(r'^pieces/(?P<pk>\d)/$',pViews.piece, name='piece'),
-                        url(r'^pieces/(?P<p_pk>\d)/events/(?P<e_pk>\d)/$', pViews.event,name='event'),
-                        url(r'^pieces/(?P<pk>\d)/eventTiming/$',pViews.eventTiming, name='eventTiming'),
-                        url(r'^pieces/(?P<p_pk>\d)/characters/(?P<ch_pk>\d)/$', pViews.characters,name='character'),
-                        url(r'^accounts/login/$',pViews.my_login,name='my_login'),
-                        url(r'^logout/$',pViews.my_logout,name='my_logout'),
+                        url(r'^pieces/(?P<p_pk>\d)/events/(?P<e_pk>\d)/$', eViews.event,name='event'),
+                        url(r'^pieces/(?P<pk>\d)/eventTiming/$',eViews.eventTiming, name='eventTiming'),
+                        url(r'^pieces/(?P<p_pk>\d)/characters/(?P<ch_pk>\d)/$', sViews.characters,name='character'),
+                        url(r'^accounts/login/$',uaViews.my_login,name='my_login'),
+                        url(r'^logout/$',uaViews.my_logout,name='my_logout'),
 
 )
