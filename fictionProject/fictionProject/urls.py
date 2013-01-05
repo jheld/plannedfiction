@@ -18,7 +18,11 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'accounts/',include('registration.backends.default.urls')),
             #           url(r'^/accounts/login/$',include('django.contrib.auth.views.login')),
+            url(r'^tinymce/', include('tinymce.urls')),
 )
+
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()
 
 from piece import views as pViews
 from event import views as eViews

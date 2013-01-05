@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     # 3rd Party
     'south',
     'registration',
+    'tinymce',
 )
 
 # A sample logging configuration. The only tangible logging
