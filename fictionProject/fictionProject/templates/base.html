@@ -4,9 +4,16 @@
     <title>
       fiction planning site
     </title>
+    {% load compress %}
     <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css"/>
+    {% compress css %}
+    {% block css %}
+    {% endblock %}
+    {% endcompress %}
+    {% compress js %}
     {% block js %}
     {% endblock %}
+    {% endcompress %}
   </head>
   <body>
     <div id="top_links">

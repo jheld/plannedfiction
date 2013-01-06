@@ -5,8 +5,8 @@
 	"fields": {
 	    "title":"The Scarlet Letter",
 	    "creators":[1],
-	    "events":[],
-	    "characters":[]
+	    "events":[1],
+	    "characters":[1]
 	}
     }
 ]
