@@ -1,11 +1,14 @@
 # Create your views here.
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.forms.util import ErrorList
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+
+from django.views.generic import ListView, FormView
+from django.views.generic.edit import FormMixin
 
 from forms import PieceForm, EventForm, CharacterForm
 from models import Piece
@@ -33,6 +36,38 @@ def index(request):
             return HttpResponse(data,mimetype='application/json')
 
     return render(request,'index.html',context)
+    
+
+class PiecesListView(ListView,FormMixin):
+    queryset = Piece.objects.all()
+    context_object_name = 'pieces'
+    template_name = 'pieces.html'
+    model = Piece
+    def get(self, request, *args, **kwargs):
+        # From ProcessFormMixin
+        form_class = PieceForm
+        self.form = self.get_form(form_class)
+        
+        # From BaseListView
+        self.object_list = self.get_queryset()
+        allow_empty = self.get_allow_empty()
+        if not allow_empty and len(self.object_list) == 0:
+            raise Http404(_(u"Empty list and '%(class_name)s.allow_empty' is False.")
+                          % {'class_name': self.__class__.__name__})
+
+        context = self.get_context_data(object_list=self.object_list, form=self.form)
+        return self.render_to_response(context)
+        
+    def post(self, request, *args, **kwargs):
+        
+        form_class = PieceForm
+        self.form = self.get_form(form_class)
+        new_title = self.form.data['title']
+        newPiece = Piece.objects.create(title=new_title)
+        newPiece.save()
+        
+        return self.get(request, *args, **kwargs)
+'''
 @login_required
 def pieces(request):
     context = {}
@@ -52,7 +87,7 @@ def pieces(request):
             context['form'] = form
 
     return render(request,'pieces.html',context)
-    
+'''    
 def piece(request,pk):
     context = {}
     aPiece = Piece.objects.get(pk=pk)

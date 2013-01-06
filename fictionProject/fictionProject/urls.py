@@ -31,7 +31,7 @@ from userAccount import views as uaViews
 
 urlpatterns += patterns('',
                         url(r'^$', pViews.index, name='index'),
-                        url(r'^pieces/$', pViews.pieces, name='pieces'),
+                        url(r'^pieces/$', pViews.PiecesListView.as_view(), name='pieces'),
                         url(r'^pieces/(?P<pk>\d)/$',pViews.piece, name='piece'),
                         url(r'^pieces/(?P<p_pk>\d)/events/(?P<e_pk>\d)/$', eViews.event,name='event'),
                         url(r'^pieces/(?P<pk>\d)/eventTiming/$',eViews.eventTiming, name='eventTiming'),
