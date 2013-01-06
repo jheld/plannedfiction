@@ -3,8 +3,7 @@
 
 {% endblock css %}
 {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js" charset="utf-8" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
 <div id="main_pane">
@@ -13,7 +12,6 @@
   </h3>
   <div id="update_piece">
     <input id="piece_title_input_id" value="{{ piece.title }}"/>
-    {% comment %}<button id="update_piece_title_button_id">Update</button>{% endcomment %}
   </div>
   <div id="characters">
     <h4>

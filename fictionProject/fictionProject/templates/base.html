@@ -5,13 +5,15 @@
       fiction planning site
     </title>
     {% load compress %}
-    <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css"/>
     {% compress css %}
+    <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css"/ type="text/css" charset="utf-8">
     {% block css %}
     {% endblock %}
     {% endcompress %}
     {% compress js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
     {% block js %}
+
     {% endblock %}
     {% endcompress %}
   </head>

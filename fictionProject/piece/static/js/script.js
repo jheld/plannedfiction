@@ -1,14 +1,4 @@
 $(document).ready(function() {
-    $('#update_piece_title_button_id').click(function() {
-	var pieceTitle = $('#piece_title_input_id').val();
-	if ( pieceTitle.length ) {
-	    var loc = $('#path').text();
-	    $.post(loc, {'changePieceTitle':pieceTitle}, function(data) {  
-		$('#piece_title_input_id').val(data.changePieceTitle);
-	    });
-	}
-    });
-
     // Test code for no update button needed in piece.html title update
     $('#piece_title_input_id').change(function() {
 	var pieceTitle = $('#piece_title_input_id').val();
