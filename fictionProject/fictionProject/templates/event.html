@@ -4,7 +4,7 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
 {% endblock %}
 {% block content %}<span style="display:none;" id="path">{{ path }}</span>
-<a href="{% url piece p_pk %}">
+<a href="{% url 'piece' p_pk %}">
   {{ pieceTitle }}
 </a>
 <h2>Event</h2>
