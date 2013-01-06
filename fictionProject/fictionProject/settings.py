@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     'subject',
     # 3rd Party
     'south',
-    'registration',
+    #'registration',
     'tinymce',
     "compressor",
 )
@@ -171,6 +171,12 @@ LOGGING = {
         },
     }
 }
+'''
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.backends.ModelBackend',
+)
+'''
 
 ACCOUNT_ACTIVATION_DAYS = 7
-AUTH_PROFILE_MODULE = 'userAccount.UserProfile'
+#AUTH_PROFILE_MODULE = 'userAccount.UserProfile'
+AUTH_USER_MODEL = 'userAccount.MyUser'

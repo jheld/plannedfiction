@@ -9,6 +9,21 @@ $(document).ready(function() {
 	}
     });
 
+    // Test code for no update button needed in piece.html title update
+    $('#piece_title_input_id').change(function() {
+	var pieceTitle = $('#piece_title_input_id').val();
+	if ( pieceTitle.length ) {
+	    var loc = $('#path').text();
+	    $.post(loc, {'changePieceTitle':pieceTitle}, function(data) {  
+		$('#piece_title_input_id').val(data.changePieceTitle);
+		if ( data['title_error'].toString().length > 0 )
+		{
+		    alert(data['title_error'].toString());
+		}
+	    });
+	}
+    });
+    
     $('#e_name_submit').click(function() {
 	var eName = $('#update_e_name').val();
 	if ( eName.length ) {

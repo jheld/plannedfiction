@@ -1,0 +1,14 @@
+[
+    {
+	"model": "event.event",
+	"pk": 1,
+	"fields": {
+	    "name":"The Beginning",
+	    "description":"Something happens.",
+	    "location":"Some place.",
+	    "time":null,
+	    "characters":[1],
+	    "order":1
+	}
+    }
+]

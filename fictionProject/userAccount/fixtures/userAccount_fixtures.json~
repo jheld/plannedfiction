@@ -1,0 +1,12 @@
+[
+    {
+	"model": "userAccount.myuser",
+	"pk": 1,
+	"fields": {
+	    "username":"jason",
+	    "date_of_birth":null,
+	    "first_name":"Jason",
+	    "last_name":"Held",
+	}
+    }
+]
