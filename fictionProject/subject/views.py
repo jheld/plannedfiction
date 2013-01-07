@@ -64,7 +64,6 @@ class CharacterDetailView(AjaxableResponseMixin, UpdateView):
         #context = super(CharacterDetailView,self).get_context_data(**kwargs)
         context = {}
         new_name = request.POST['changeCName']
-        print(new_name)
         character = self.get_object()
         if character in Character.objects.all():
             character.name = new_name
