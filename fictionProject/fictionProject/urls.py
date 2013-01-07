@@ -36,6 +36,7 @@ urlpatterns += patterns('',
                         url(r'^pieces/(?P<p_pk>\d)/events/(?P<e_pk>\d)/$', eViews.event,name='event'),
                         url(r'^pieces/(?P<pk>\d)/eventTiming/$',eViews.eventTiming, name='eventTiming'),
                         url(r'^pieces/(?P<p_pk>\d)/characters/(?P<ch_pk>\d)/$', sViews.characters,name='character'),
+                        url(r'^pieces/(?P<p_pk>\d)/characters1/(?P<ch_pk>\d)/$',sViews.CharacterDetailView.as_view(),name='character1'),
                         url(r'^accounts/login/$',uaViews.my_login,name='my_login'),
                         url(r'^logout/$',uaViews.my_logout,name='my_logout'),
 
