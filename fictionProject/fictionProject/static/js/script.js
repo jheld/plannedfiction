@@ -1,1 +1,0 @@
-/home/jason/plannedfiction/plannedfiction/fictionProject/piece/static/js/script.js

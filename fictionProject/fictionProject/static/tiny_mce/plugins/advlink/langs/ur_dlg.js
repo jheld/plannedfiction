@@ -1,1 +1,0 @@
-/usr/local/lib/python2.7/dist-packages/tinymce/static/tiny_mce/plugins/advlink/langs/ur_dlg.js
