@@ -93,16 +93,18 @@ $(document).ready(function() {
 	}
 
     });
+    
     $('.update_name').click(function() {
-	var c_name = $(this).parent().find('input').val();
-	if ( c_name.length )
-	{
-	    var parentElement = $(this).parent();
-	    var loc = $('#path').text();
-	    $.post(loc, {'changeCName':c_name, 'name_type':$(parentElement).attr('id')}, function(data) {  
-		$(parentElement).find('input').val(data.c_name);
-	    });	    
-	}
+
+	    var c_name = $(this).parent().find('#c_name_input').val();
+	    if ( c_name.length )
+	    {
+	        var parentElement = $(this).parent();
+	        var loc = $('#path').text();
+	        $.post(loc, {'changeCName':c_name, 'name_type':$(parentElement).attr('id')}, function(data) {  
+		        $(parentElement).find('#c_name_input').val(data.c_name);
+	        });	    
+	    }
     });
     $('.update_age').click(function() {
 	var c_age = $(this).parent().find('input').val();
@@ -111,7 +113,7 @@ $(document).ready(function() {
 	    var parentElement = $(this).parent();
 	    var loc = $('#path').text();
 	    $.post(loc, {'changeCAge':c_age}, function(data) {  
-		$(parentElement).find('input').val(data['changeCAge']);
+		    $(parentElement).find('input').val(data['changeCAge']);
 	    });	    
 	}
     });
