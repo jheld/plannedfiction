@@ -94,6 +94,22 @@ body {
     top:10em;
 }*/
 
+#text_editor {
+    text-align:center;
+    position:fixed;
+    top:6.5em;
+    left:27em;
+    border-left:0.1em black solid;
+    padding-left:2em;
+    border-right:0.1em black solid;
+    padding-right:2em;
+    bottom:4em;
+}
+
+#editor_textarea {
+    resize: none;
+}
+
 /* index page  */
 #character_results_header {
     display:none;
