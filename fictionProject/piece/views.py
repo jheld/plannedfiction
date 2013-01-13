@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 from django.views.generic import ListView, FormView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin,ProcessFormView
 
 from forms import PieceForm, EventForm, CharacterForm
 from models import Piece
@@ -41,7 +41,34 @@ def index(request):
     return render(request,'index.html',context)
 
 
-class PiecesListView(ListView,FormMixin):
+class AjaxableResponseMixin(object):
+    """
+    Mixin to add AJAX support to a form.
+    Must be used with an object-based FormView (e.g. CreateView)
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        data = json.dumps(context)
+        response_kwargs['content_type'] = 'application/json'
+        return HttpResponse(data, **response_kwargs)
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return self.render_to_json_response(form.errors, status=400)
+        else:
+            return super(AjaxableResponseMixin, self).form_invalid(form)
+
+    def form_valid(self, form):
+        if self.request.is_ajax():
+            data = {
+                'pk': form.instance.pk,
+            }
+            return self.render_to_json_response(data)
+        else:
+            return super(AjaxableResponseMixin, self).form_valid(form)
+
+
+
+class PiecesListView(AjaxableResponseMixin,FormMixin,ListView):
     queryset = Piece.objects.all()
     context_object_name = 'pieces'
     template_name = 'pieces.html'
@@ -65,11 +92,16 @@ class PiecesListView(ListView,FormMixin):
         
         form_class = PieceForm
         self.form = self.get_form(form_class)
-        new_title = self.form.data['title']
-        newPiece = Piece.objects.create(title=new_title)
-        newPiece.save()
-        
-        return self.get(request, *args, **kwargs)
+        new_title = self.form.data['newTitle']
+        context = {}
+        if not len(Piece.objects.filter(title=new_title)):
+            newPiece = Piece.objects.create(title=new_title)
+            newPiece.save()
+            context['pieceTitle'] = newPiece.title
+            context['piecePK'] = newPiece.pk
+        #return self.get(request, *args, **kwargs)
+        return self.render_to_json_response(context)
+
     
 def piece(request,pk):
     context = {}

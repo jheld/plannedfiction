@@ -1,4 +1,25 @@
 $(document).ready(function() {
+    $('#submit_piece_id').click(function() {  
+	var newTitle = $(this).parent().find('#id_title').val();
+	var parentElement = $(this).parent();
+	if ( newTitle.length ) {
+	    var loc = $('#path').text();
+	    $.post(loc, {'newTitle':newTitle}, function(data) {  
+		if ( data['piecePK'] && data['pieceTitle'])
+		{
+		    var newLI = document.createElement('li');
+		    newLI.setAttribute('class','piece_li_class');
+		    var newA = document.createElement('a');
+		    newA.innerHTML = data['pieceTitle'];
+		    newA.setAttribute('href','/pieces/'+data['piecePK']+'/');
+		    newLI.appendChild(newA);
+		    $('#pieces_ul_id').append(newLI);
+		}
+	    });
+	}
+
+	
+    });
     // Test code for no update button needed in piece.html title update
     $('#piece_title_input_id').change(function() {
 	var pieceTitle = $('#piece_title_input_id').val();

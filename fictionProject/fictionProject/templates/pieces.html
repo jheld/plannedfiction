@@ -3,15 +3,15 @@
 
 {% endblock css %}
 {% block js %}
-
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js" charset="utf-8" type="text/javascript"></script>
 {% endblock js %}
 {% block content %}
 <h3>
   Pieces
 </h3>
-<ul>
+<ul id="pieces_ul_id">
   {% for piece in pieces %}
-  <li><a href="{% url 'piece' piece.pk %}">{{ piece.title }}</a></li>
+  <li class="piece_li_class"><a href="{% url 'piece' piece.pk %}">{{ piece.title }}</a></li>
   {% empty %}
   <p>You haven't planned any pieces, yet.</p>
   {% endfor %}
@@ -20,6 +20,11 @@
 <h3>
   Add a piece
 </h3>
+<table>
+  {{ form.as_table }}
+</table>
+<input type="submit" value="Submit" name="submit_piece" id="submit_piece_id"/>
+{% comment %}
 <form action="." method="POST">
   {% csrf_token %}
   <table>
@@ -27,4 +32,5 @@
   </table>
   <input type="submit" value="Submit"/>
 </form>
+{% endcomment %}
 {% endblock %}
