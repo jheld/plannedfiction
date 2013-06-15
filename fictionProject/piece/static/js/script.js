@@ -39,8 +39,8 @@ $(document).ready(function() {
 	var eName = $('#update_e_name').val();
 	if ( eName.length ) {
 	    var loc = $('#path').text();
-	    $.post(loc, {'name':eName}, function(data) {  
-		$('#update_e_name').val(data.name);
+	    $.post(loc, {'e_name':eName}, function(data) {  
+		$('#update_e_name').val(data['e_name']);
 	    });
 	}
     });

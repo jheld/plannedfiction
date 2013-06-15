@@ -12,3 +12,6 @@ class Event(models.Model):
     order = models.PositiveIntegerField(blank=True,null=True)
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return 'events/{id}/'.format(id=self.id)
