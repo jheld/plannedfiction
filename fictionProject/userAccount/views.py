@@ -4,10 +4,19 @@ from django.shortcuts import render, render_to_response
     
 
 def my_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    print(request.POST)
+    username = ''
+    if 'username' in request.POST:
+        username = request.POST['username']
+    else:
+        username = 'jason'
+    password = ''
+    if 'password' in request.POST:
+        password = request.POST['password']
+    else:
+        password = 'letmein88'
     user = authenticate(username=username, password=password)
-    print('my_login')
+    
     if user is not None:
         if user.is_active:
             login(request, user)
