@@ -37,6 +37,13 @@ body {
     bottom:0em;
 }
 
+#piece_title_p_id {
+    text-decoration:underline;
+    text-decoration-color: grey;
+    text-decoration-style: dotted;
+    background-color:#D8D8D8;
+}
+
 #upcoming {
     font-size:xx-small;
     color:gray;

@@ -6,12 +6,29 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/script.js" charset="utf-8" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
+<span style="display:none;" id="path">{{ piece.get_absolute_url }}{{ event.get_absolute_url }}</span>
 <div id="main_pane">
   <h3>
     Piece
   </h3>
   <div id="update_piece">
+    {% comment %}
     <input id="piece_title_input_id" value="{{ piece.title }}"/>
+    {% endcomment %}
+    <span id="piece_title_p_id" contenteditable="true">{{ piece.title }}</span>
+    <script type="text/javascript" charset="utf-8">
+      document.getElementById("piece_title_p_id").addEventListener("input", function() {
+      	var title = $('#piece_title_p_id').text();
+
+	if ( title.length ) {
+	    var loc = $('#path').text();
+	    $.post(loc, {'changePieceTitle':title}, function(data) {  
+		$('#piece_title_p_id').val(data['changePieceTitle']);
+	    });
+	}
+      
+      });
+    </script>
   </div>
   <div id="characters">
     <h4>

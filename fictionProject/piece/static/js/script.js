@@ -34,7 +34,14 @@ $(document).ready(function() {
 	    });
 	}
     });
-    
+
+    // try the contenteditable piece title, instead of "input" element
+    $("#piece_title_p_id").change(function() {
+	var pieceTitle = $("#piece_title_p_id").val();
+	alert(pieceTitle);
+    })
+    // end piece title contenteditable
+
     $('#e_name_submit').click(function() {
 	var eName = $('#update_e_name').val();
 	if ( eName.length ) {
