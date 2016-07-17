@@ -51,12 +51,12 @@ $(document).ready(function() {
 	    });
 	}
     });
-    if ( !$('#chars_not_in_event_ul li').size() )
+    if ( !$('#chars_not_in_event_ul li').text().length )
     {
 	$('#chars_not_in_event_ul').append('<li id="no_chars">No characters not included</li>');
     }
     
-    $('#chars_not_in_event_ul').live('change',function() {
+    $('body').on('change', '#chars_not_in_event_ul',function() {
 	alert('hi');
 	if ( !$('#chars_not_in_event_ul li').size() )
 	{
@@ -86,7 +86,7 @@ $(document).ready(function() {
 	    });
 	}
     });
-    $('.remove_char_event').live('click',function() {
+    $('body').on('click', '.remove_char_event',function() {
 	var eCharName = $(this).parent().find('.name').text();
 	var parentElement = $(this).parent();
 	if ( eCharName.length ) {
@@ -102,7 +102,7 @@ $(document).ready(function() {
 	    });
 	}
     });
-    $('.add_char_event').live('click',function() {
+    $('body').on('click', '.add_char_event',function() {
 	var eCharName = $(this).parent().find('.name').text();
 	var parentElement = $(this).parent();
 	if ( eCharName.length ) {

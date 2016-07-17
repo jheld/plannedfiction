@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block css %}
 {% endblock %}
 {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/piece_script.js'%}"></script>
 {% endblock %}
 {% block content %}<span style="display:none;" id="path">{{ piece.get_absolute_url }}{{ event.get_absolute_url }}</span>
 <a href="{% url 'piece' p_pk %}">

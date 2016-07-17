@@ -28,7 +28,7 @@ def index(request):
                 if characters_results:
                     formatted_results = []
                     for character_result in characters_results:
-                        full_name = character_result.__unicode__().replace('  ', ' ')
+                        full_name = str(character_result).replace('  ', ' ')
                         for piece in Piece.objects.all():
                             if character_result in piece.characters.all():
                                 formatted_results.append([full_name,piece.id,character_result.id,piece.title])
