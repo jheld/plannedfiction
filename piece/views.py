@@ -3,6 +3,7 @@ import json
 
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, Http404
+from django.utils.translation import ugettext_lazy as _
 from django.forms.utils import ErrorList
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
