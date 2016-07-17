@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block css %}
+
+{% endblock css %}
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/script.js"></script>
+
+{% endblock %}
+{% block content %}
+<h2>Piece</h2>
+<a href="{% url 'piece' piecePK %}">{{ pieceTitle }}</a>
+<h3>Event Timing page.</h3>
+{% comment %}
+<ol id="event_timing_ol_id" ondragover="allowDrop(event)" ondrop="drop(event)">
+  {% for event in events %}
+  <li class="eventName_timing_li_class" draggable="true" id="event_timing_li_{{ event.id }}" ondragstart="drag(event)">
+    {{ event.name }}
+  </li>
+  {% endfor %}
+</ol>
+{% endcomment %}
+<div id="event_timing_div" ondragover="allowDrop(event)" ondrop="drop(event)" droppable="true" style="border: dashed 1px black;">
+  {% for event in events %}
+  <span class="eventName_timing_span_class" id="event_timing_span_{{ event.id }}" draggable="true" ondragstart="drag(event)" droppable="false" style="border: dashed 2px purple;">
+    {{ event.name }}, order: {{ event.order }}
+  </span><br/>
+  {% endfor %}
+</div>
+{% endblock %}

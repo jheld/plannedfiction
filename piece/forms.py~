@@ -1,0 +1,20 @@
+from django import forms
+
+
+class PieceForm(forms.Form):
+    title = forms.CharField(max_length=100)
+
+class EventForm(forms.Form):
+    name = forms.CharField(max_length=250, required=True)
+    description = forms.CharField(max_length=250,widget=forms.widgets.Textarea(),required=False)
+    dateTime = forms.DateTimeField(required=False)
+    location = forms.CharField(max_length=250,required=False)
+    characters = forms.MultipleChoiceField(choices=[],required=False)
+
+class CharacterForm(forms.Form):
+    first_name = forms.CharField(max_length=20,required=False)
+    middle_name = forms.CharField(max_length=20,required=False)
+    last_name = forms.CharField(max_length=30,required=False)
+    age = forms.IntegerField()
+    gender = forms.CharField(max_length=30)
+    

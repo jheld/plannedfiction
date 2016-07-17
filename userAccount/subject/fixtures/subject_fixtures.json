@@ -1,0 +1,14 @@
+[
+    {
+	"model": "subject.character",
+	"pk": 1,
+	"fields": {
+	    "name":"Hester Prynne",
+	    "age":23,
+	    "eye_color":"",
+	    "height":null,
+	    "gender":"Female",
+	    "race":"Caucasion"
+	}
+    }
+]

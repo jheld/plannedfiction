@@ -1,0 +1,32 @@
+from django.db import models
+
+class Character(models.Model):
+    first_name = models.CharField(max_length=20)
+    middle_name = models.CharField(max_length=20,blank=True,null=True)
+    last_name = models.CharField(max_length=30)
+    age = models.PositiveIntegerField()
+    gender = models.CharField(max_length=30)
+    def __unicode__(self):
+        return '{0} {1} {2}'.format(self.first_name,self.middle_name,self.last_name)
+
+class Event(models.Model):
+    name = models.CharField(max_length=250)
+    description = models.TextField()
+    location = models.CharField(max_length=250,null=True)
+    time = models.DateTimeField(null=True)
+    # characters = models.ManyToManyField(Character, through='Membership')
+    characters = models.ManyToManyField(Character, null=True,blank=True)
+    def __unicode__(self):
+        return self.name
+
+class Piece(models.Model):
+    title = models.CharField(max_length=100)
+    events = models.ManyToManyField(Event,null=True,blank=True)
+    characters = models.ManyToManyField(Character,null=True,blank=True)
+    def __unicode__(self):
+        return self.title
+'''
+class Membership(models.Model):
+    character = models.ForeignKey(Character)
+    event = models.ForeignKey(Event)
+''' 

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+
+{% endblock css %}
+{% block js %}
+<script type="text/javascript" src="{%  static 'js/piece_script.js'%}" charset="utf-8" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+<span style="display:none;" id="path">{{ piece.get_absolute_url }}{{ event.get_absolute_url }}</span>
+<div id="main_pane">
+  <h3>
+    Piece
+  </h3>
+  <div id="update_piece">
+    {% comment %}
+    <input id="piece_title_input_id" value="{{ piece.title }}"/>
+    {% endcomment %}
+    <span id="piece_title_p_id" contenteditable="true">{{ piece.title }}</span>
+    <script type="text/javascript" charset="utf-8">
+      document.getElementById("piece_title_p_id").addEventListener("input", function() {
+      	var title = $('#piece_title_p_id').text();
+
+	if ( title.length ) {
+	    var loc = $('#path').text();
+	    $.post(loc, {'changePieceTitle':title}, function(data) {  
+		$('#piece_title_p_id').val(data['changePieceTitle']);
+	    });
+	}
+      
+      });
+    </script>
+  </div>
+  <div id="characters">
+    <h4>
+      Characters
+    </h4>
+    <p id="upcoming">
+      Order doesn't work yet.
+    </p>
+    <select id="character_order">
+      <option>
+	Ascending Order
+      </option>
+      <option>
+	Descending Order
+      </option>
+      <option>
+	Ascending Alphabetical
+      </option>
+      <option>
+	Descending Alphabetical
+      </option>
+    </select>
+
+    <ul id="current_characters">
+      {% for character in characters.all %}
+      <li>
+	<a href="{% url 'character' piece.id character.id %}">
+	  {{ character.name }}
+	</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="events">
+    <h4>
+      Events
+    </h4>
+    <p id="upcoming">
+      Order doesn't work yet.
+    </p>
+    <select id="event_order">
+      <option>
+	Ascending Order
+      </option>
+      <option>
+	Descending Order
+      </option>
+      <option>
+	Ascending Alphabetical
+      </option>
+      <option>
+	Descending Alphabetical
+      </option>
+    </select>
+    <ul id="current_events">
+      {% for event in events.all %}
+      <li>
+	<a href="{% url 'event' piece.id event.id %}">
+	  {{ event.name }}
+	</a>
+      </li>
+      {% empty %}
+      <li>
+	You have no events, yet.
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <article id="eventTiming">
+    <a href="{% url 'eventTiming' piece.pk %}">Event Timing</a>
+  </article>
+</div>
+<div id="text_editor">
+    <h3>Editor</h3>
+    <textarea id="editor_textarea" cols="80" rows="40" autofocus></textarea>
+</div>
+<div id="form_envelope">
+  <form method="POST" action="." id="character_form">
+    <h3>Character Form</h3>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+  </form>
+  <form method="POST" action="." id="event_form">
+    <hr id="between_forms">
+
+    <h3>Event Form</h3>
+    {% csrf_token %}
+    <table>
+      {{ event_form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+  </form>
+</div>
+{% endblock %}

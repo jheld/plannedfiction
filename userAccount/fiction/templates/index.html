@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/piece_script.js'%}"></script>
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<div id="character_search">
+  <h3>
+    Character Search
+  </h3>
+  <input type="text" value="" id="character_search_input" placeholder="Harry Potter"/>
+  <input type="submit" value="Search" id="character_search_submit"/>
+  <div id="character_results">
+    <h4 id="character_results_header">
+      Results
+    </h4>
+    <ul id="character_results_ul">
+    </ul>
+  </div>
+</div>
+{% else %}
+<h3>Welcome</h3>
+<p>Do you think story telling is easy? If so, get off this site.</p>
+<h4>On a less serious note</h4>
+<p>It's time to hunker down, pull out your fantastical writer's passion, and take a butcher knife to your fear. Get ready, set, <a href="accounts/register">Sign up</a>, or <a href="{% url 'my_login' %}">Login</a>.</p>
+<h5>Right, right, sorry</h5>
+<p>You wanted to know what this site is about. In that case, here's a run-down:</p>
+<ul>
+  <li>
+    Create a piece (or as many as you want)
+  </li>
+  <li>
+    Create your characters for that piece
+  </li>
+  <li>
+    Make up some events (like chapters) and add your characters to them
+  </li>
+  <li>
+    Let us do some work to help you organize and search on your works of art
+  </li>
+</ul>
+{% endif %}
+{% endblock %}

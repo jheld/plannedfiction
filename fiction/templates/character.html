@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+
+{% endblock css %}
+{% block js %}
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/piece_script.js'%}"></script>
+{% endblock %}
+{% block content %}
+<h2>Piece</h2>
+<a href="{% url 'piece' piecePK %}">{{ pieceTitle }}</a>
+<h3>Character</h3>
+<ul>
+  <li id="c_name">Name: <input id="c_name_input" type="text" value="{{ character.name }}"/><input type="submit" class="update_name" value="Update"/></li>
+  <li id="c_age">Age: <input value="{{ character.age }}"/><input type="submit" class="update_age" value="Update"/></li>
+  <li id="c_gender">Gender: <input value="{{ character.gender }}"/><input type="submit" class="update_gender" value="Update"/></li>
+</ul>
+{% endblock %}
