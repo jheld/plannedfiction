@@ -6,8 +6,8 @@ from event.models import Event
 
 class Piece(models.Model):
     title = models.CharField(max_length=100,unique=True)
-    events = models.ManyToManyField(Event,null=True,blank=True)
-    characters = models.ManyToManyField(Character,null=True,blank=True)
+    events = models.ManyToManyField(Event, blank=True)
+    characters = models.ManyToManyField(Character, blank=True)
     # The user who created the piece
     creators = models.ManyToManyField(settings.AUTH_USER_MODEL)
     '''
